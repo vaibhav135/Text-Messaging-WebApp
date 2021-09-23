@@ -1,0 +1,23 @@
+# logs
+.DS_*
+*.log
+logs
+**/*.backup.*
+**/*.back.*
+
+node_modules
+backend/.env
+backend/dist/
+frontend/build/Release
+
+# dotenv environment variables file
+.env
+.env.test
+.env.production
+
+
+# Optional eslint cache
+.eslintcache
+
+# TypeScript cache
+*.tsbuildinfo
