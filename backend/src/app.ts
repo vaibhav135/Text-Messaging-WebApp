@@ -1,12 +1,71 @@
-import express from "express";
+/**
+ * author: V.S.B (Vaibhav Singh Bisht)
+ *
+ * note: If you are reading this peice of code then I might
+ * tell you that at the time of writing this code. I am still
+ * a noob programmer and learning so please don't be critical
+ * about the code and contribute to the project if you want.
+ * Thank you
+ * Happy Coding
+ *
+ */
 
+// ignore this comment please: 3rdproject#
+
+import express from "express";
+import { createServer } from "http";
+import {server} from "socket.io":
+import * as dotenv from "dotenv";
+import cors from "cors";
+import mongoose from "mongoose";
+
+import routes from "./routes/posts";
+
+dotenv.config();
 const app = express();
-const port = 5000;
+const httpServer = createServer(app);
+
+app.use(cors());
+app.use(express.json());
+app.use("/post", routes);
+
+const user = process.env.MONGODB_USER ?? "";
+const password = process.env.MONGODB_PASSWORD ?? "";
+const database = process.env.MONGODB_DB_NAME ?? "";
+
+const db_url = `mongodb+srv://${user}:${encodeURIComponent(
+  password
+)}@text-chat-cluster.3rs7h.mongodb.net/${database}?retryWrites=true&w=majority`;
+
+// test_statement: print type
+//console.log(db_url);
+//console.log(typeof db_url);
 
 app.get("/", (req, res) => {
   res.send("hello world");
 });
 
-app.listen(port, () => {
+
+const io = new Server(httpServer, { /* options */ });
+io.on("connection", (socket) => {  // ...});
+
+/**
+ * Connecting to the mongoDB atlas database
+ * using mongoose
+ */
+mongoose
+  .connect(db_url)
+  .then(() => console.log("connected to db"))
+  .catch((error) => console.log(error));
+
+// assigning port
+const port = process.env.PORT ?? 5000;
+
+/**
+ * app.listen(port) will not work here,
+ * as it creates a new http Sever
+*/
+
+httpServer.listen(port, () => {
   console.log(`Timezones by location application is running on port ${port}.`);
 });

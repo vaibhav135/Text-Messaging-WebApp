@@ -1,0 +1,23 @@
+.noGroupFound{
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	background-color: aqua;
+	justify-content: center;
+	align-items: center;
+}
+
+.headingGroup{
+	margin-bottom: 190px;
+}
+
+.buttonGroup{
+	height: 36px;
+	width:20em;
+	border-radius:5px;
+	font-size: 22px;
+}
+
+.buttonGroup:hover{
+	background-color: indigo;
+}

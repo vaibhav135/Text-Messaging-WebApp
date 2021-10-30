@@ -1,0 +1,76 @@
+.landing_page{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	background-color: #2b6777;
+}
+
+
+.login_box{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid gray;
+	border-radius: 5px;
+	width: 650px;
+	height: 450px;
+	background-color: #c8d8e4;
+	position: absolute;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5);
+	transition: 0.3s;
+}
+
+.join_heading{
+	padding-bottom: 10px;
+	color: #0a464f;
+}
+
+.login_form{
+	display: flex;
+	flex-direction: column;
+	height: 220px;
+	width: 300px;
+	margin-bottom: 140px;
+	/*justify-content: center;*/
+	/*align-items: center;*/
+}
+
+#uname_id, #password_id{
+	width: 260px;
+	border: none;
+	border-bottom: 2px solid #0a464f;
+	outline: none;
+	font-size: 16px;
+	background-color: #c8d8e4;
+}
+
+
+.label1, .label2{
+	color: #0c3d45;
+	margin-bottom: 10px;
+	margin-top: 20px;
+}
+
+.submit_button{
+	margin-top: 30px;
+	width: 210px;
+	height: 40px;
+	align-self: center;
+	color: #0c3d45;
+	/*margin-bottom: 10px;*/
+	/*color: black;*/
+ 	font-size: 18px;
+	background-color: #d5f4e6;
+	border: 2px solid #c8d8e4;
+	border-radius: 10px;
+}
+
+#eye_logo{
+	color: #0c3d45;
+}
+
+.submit_button:hover{
+	background-color: #75bec9;
+}
