@@ -11,7 +11,7 @@ const UserState = () => {
   };
 
   // info: userData is an object type which contains
-  // username and password both string type.
+  // username and password.
   const [userStateHook, setUserStateHook] = useState<userData>(guestUser);
 
   const setLogoutState = useCallback(

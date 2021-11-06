@@ -6,31 +6,19 @@
 /*primary font => for heading and stuff */
 .textFont1{
 	font-family: gt-super, Georgia, Cambria, "Times New Roman", Times, serif;
-	font-weight: 550;
-	font-size: 50px;
 }
 
 /*secondary font => for subheading */
 .textFont2{
 	font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-weight: 400;
-	font-size: 26px;
 }
 
 /*tertiary font => everything other than heading and subheading*/
 /*e.g., paragraph,article,normal text*/
 .textFont3{
 	font-family: charter, Georgia, Cambria, "Times New Roman", Times, serif;
-	font-weight: 400;
-	font-size: 20px;
 }
 
 .textFontButton{
 	font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-weight: 400;
-	font-size: 16px;
-	margin-top: 20px;
-	color: white;
-	transition-duration: 0.4s;
-
 }

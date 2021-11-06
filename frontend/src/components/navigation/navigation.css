@@ -1,0 +1,91 @@
+/*css for top navigation*/
+.top_navigation{
+	display: flex;
+	top: 0;
+	flex-direction: row;
+	justify-content: end;
+	overflow: hidden;
+	position: sticky;
+	height: 5%;
+	width: 100%;
+	background-color: #03045E;
+	border: 1px solid #023E8A;
+}
+
+#top_navigation_button{
+	height: 100%;
+	width: 160px;
+	margin-bottom: 5px;
+	background-color: #03045E;
+	color: #00B4D8;
+	border: none;
+	font-size: 19px;
+	font-weight: 600;
+}
+
+#top_navigation_button:hover{
+	background-color: #00B4D8;
+	color: #03045E;
+	cursor: pointer;
+}
+
+
+
+/*=========================================================================================*/
+/*=========================================================================================*/
+
+
+
+/*css for side navigation*/
+.groupsArea, .membersArea{
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 20%;
+	background-color: #ADE8F4;
+	border-right: 1px solid #90E0EF;
+	border-left: 1px solid #90E0EF;
+}
+
+
+
+/*headings for both group and members side-section*/
+#side_heading{
+	color: #03045E;
+	margin-bottom: 30px;
+	margin-left: 15px;
+}
+
+
+#group_ul, #members_ul{
+	list-style-type: none;
+	color: #023E8A;
+	font-size: 20px;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	margin:0;
+	padding:0;
+}
+
+#group_li, #member_li{
+	display: flex;
+	align-items: center;
+	padding-left: 25px;
+	font-weight: 600px;
+	height: 50px;
+	width: 100%;
+}
+
+#group_li:hover, #member_li:hover{
+	background-color: #90E0EF;
+	border-top: .5px solid #48CAE4;
+	border-bottom: 1px solid #48CAE4;
+	cursor: pointer;
+}
+
+.active_group{
+	background-color: #90E0EF;
+	border-top: .5px solid #48CAE4;
+	border-bottom: 1px solid #48CAE4;
+}

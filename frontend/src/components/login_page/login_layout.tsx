@@ -36,7 +36,6 @@ const LoginLayout = () => {
         <label htmlFor="uname" className="label1 textFont3">
           username{" "}
         </label>
-        <br />
         <input
           type="text"
           id="uname_id"
@@ -46,13 +45,11 @@ const LoginLayout = () => {
           autoFocus
           required
         />{" "}
-        <br />
         <label htmlFor="password" className="label2 textFont3">
           {" "}
           password{" "}
         </label>
-        <br />
-        <div>
+        <div id="password_div">
           <input
             type={showPassword ? "text" : "password"}
             id="password_id"
@@ -67,7 +64,6 @@ const LoginLayout = () => {
             <FaEyeSlash id="eye_logo" onClick={changePasswordVisualState} />
           )}
         </div>
-        <br />
         <input
           type="submit"
           className="submit_button textFontButton"
