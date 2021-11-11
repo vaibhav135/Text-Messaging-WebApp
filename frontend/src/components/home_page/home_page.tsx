@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import MidSection from "./mid_section";
-import Explore from "../explore/explore";
 import CreateGroup from "../create_group/create_group";
 import PopUpContext from "../context_provider/popup_context";
 import ExploreContext from "../context_provider/explore_context";
@@ -17,7 +16,7 @@ const HomePage = () => {
   const popUp_value = { popUpState, setPopUpState };
   const explore_value = { exploreState, setExploreState };
 
-  const joinedGroupsList = FetchGroupsJoined;
+  const joinedGroupsList: string[] = FetchGroupsJoined();
 
   return (
     <div className="home_page">

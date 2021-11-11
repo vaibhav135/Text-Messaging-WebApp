@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 
 import Category from "./category";
 import PopUpContext from "../context_provider/popup_context";
-import { IconContext } from "react-icons";
+//import { IconContext } from "react-icons";
 import { AiOutlineClose } from "react-icons/ai";
 
 // Css in home_page.css
@@ -12,7 +12,9 @@ const CreateGroup = (props: any) => {
   // selects more than 5 then a message will appear that they cannot
   // select more than 5
   const [restrictCategories, setRestrictCategories] = useState(0);
+  const [groupName, setGroupName] = useState("");
   const [descriptionTextArea, setDescriptionTextArea] = useState("");
+  const [categoryList, setCategoryList] = useState<string[]>([]);
   const { popUpState, setPopUpState } = useContext(PopUpContext);
 
   const categories: string[] = [
@@ -47,10 +49,27 @@ const CreateGroup = (props: any) => {
 
   // submit button will trigger this function
   const createGroupSubmit = (e: any) => {
+    e.preventDefault();
+    console.log(groupName);
+    console.log(descriptionTextArea);
+    console.log(categoryList);
+
+    //post request here
+
     setPopUpState(!popUpState);
   };
 
-  console.log(restrictCategories);
+  const addCategories = (value: string) => {
+    setRestrictCategories(restrictCategories + 1);
+    setCategoryList([...categoryList, value]);
+  };
+
+  const subtractCategories = (value: string) => {
+    setRestrictCategories(restrictCategories - 1);
+    setCategoryList(categoryList.filter((item) => item !== value));
+  };
+
+  //console.log(restrictCategories);
 
   return (
     <div className="popup_page">
@@ -66,7 +85,10 @@ const CreateGroup = (props: any) => {
       ) : (
         <> </>
       )}
-      <form className="create_group_form" onSubmit={() => createGroupSubmit}>
+      <form
+        className="create_group_form"
+        onSubmit={(e) => createGroupSubmit(e)}
+      >
         <label
           htmlFor="group_name_input"
           className="textFont2"
@@ -74,7 +96,13 @@ const CreateGroup = (props: any) => {
         >
           Group Name{" "}
         </label>
-        <input type="text" id="group_name_input" required />
+        <input
+          type="text"
+          id="group_name_input"
+          value={groupName}
+          onChange={(e: any) => setGroupName(e.target.value)}
+          required
+        />
         <label
           htmlFor="description_textarea"
           className="textFont2"
@@ -100,12 +128,8 @@ const CreateGroup = (props: any) => {
             <Category
               value={value}
               key={index}
-              addCategories={() =>
-                setRestrictCategories(restrictCategories + 1)
-              }
-              subtractCategories={() =>
-                setRestrictCategories(restrictCategories - 1)
-              }
+              addCategories={() => addCategories(value)}
+              subtractCategories={() => subtractCategories(value)}
             />
           ))}
         </ul>

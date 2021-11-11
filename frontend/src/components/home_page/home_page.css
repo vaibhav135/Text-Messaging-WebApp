@@ -12,6 +12,8 @@
 	height: 100%;
 }
 
+
+/*=========================================================================================*/
 /*When there is no group joined */
 .noGroupFound{
 	display: flex;
@@ -279,4 +281,104 @@
 	background-color: #00B4D8;
 	border: 1px solid #03045E;
 	color: #03045E;
+}
+
+
+
+/*=========================================================================================*/
+/*================ Css for ChatArea  ======================================================*/
+
+.message_ul{
+	display: flex;
+	flex-direction: column-reverse;
+	/*background-color: brown;*/
+	width: 100%;
+	height: 82%;
+	margin:0;
+	padding:0;
+	margin-bottom: 20px;
+	list-style-type: none;
+	overflow-y: auto;
+}
+
+.message_box{
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	background-color: #023E8A;
+	color:white;
+	min-width: 10%;
+	max-width: 40%;
+	left: 55%;
+	font-size: 19px;
+	border-radius: 19px;
+	margin: 20px;
+}
+
+.message_li{
+	position: relative;
+	padding: 19px;
+	font-family: Arial, Helvetica, sans-serif;
+	word-break: normal;
+	word-spacing: 2px;
+	white-space: pre-line;
+}
+
+.message_metadata_ul{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	list-style-type: none;
+	font-size: 13px;
+	padding: 5px 19px 0px 19px;
+}
+
+
+.chatArea{
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 70%;
+	background-color: #CAF0F8;
+	align-items: center;
+}
+
+
+.chatAreaForm{
+	display: inline-flex;
+	background-color: white;
+	width: 100%;
+	height: 10%;
+}
+
+.inputMessage{
+	overflow: auto;
+	resize: none;
+	height: 90%;
+	width: 90%;
+	font-size: 18px;
+	border: 1px solid #90E0EF;
+	padding-top: 10px;
+	padding-left: 20px;
+}
+
+
+.inputMessage:focus{
+	outline: none;
+	border: 4px solid #90E0EF;
+}
+
+.sendBtn{
+	height: 110px;
+	width: 129px;
+	border: 3px solid #90E0EF;
+	color: #0077B6;
+	background-color: #CAF0F8;
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.sendBtn:hover{
+	background-color: #0077B6;
+	color: #CAF0F8;
 }

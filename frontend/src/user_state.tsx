@@ -1,4 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
+import {
+  BrowserRouter as Router,
+} from "react-router-dom";
 import LoginContext from "./components/context_provider/login_context";
 import LandingPage from "./components/login_page/landing_page";
 import userData from "./interface/user_interface";
@@ -34,11 +37,11 @@ const UserState = () => {
   );
 
   return (
-    <>
+	  <Router >
       <LoginContext.Provider value={value}>
         <LandingPage />
       </LoginContext.Provider>
-    </>
+	  </Router>
   );
 };
 

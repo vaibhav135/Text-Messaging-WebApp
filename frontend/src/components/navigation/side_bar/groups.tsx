@@ -1,23 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import GroupContext from "../../context_provider/group_context";
 
-const Groups = () => {
-  const groupsList = [
-    "group1",
-    "group2",
-    "group3",
-    "group4",
-    "group5",
-    "group6",
-    "group7",
-  ];
-
+const Groups = ({ groupsList }: { groupsList: string[] }) => {
   // TODO:- currently I've selected the first group as group selected later when,
   // i'll connect the frontend to the backend then. I'll create a variable named
   // group_selected in the the database which will basically tell, what group I
   // selected at last time when the user was logged in.
-  const [groupSelected, setGroupSelected] = useState(
-    groupsList.length > 0 ? groupsList[0] : null
-  );
+  //
+  //
+  //
+  //console.log(groupsList);
+  const { groupSelected, setGroupSelected } = useContext(GroupContext);
 
   return (
     <div className="groupsArea">

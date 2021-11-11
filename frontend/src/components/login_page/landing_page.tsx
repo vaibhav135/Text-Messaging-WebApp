@@ -8,21 +8,32 @@ import {
   Switch,
   Route,
   Redirect,
+  useHistory,
+  useLocation,
 } from "react-router-dom";
 import "./login_page.css";
 
 const LandingPage = () => {
   // typeof contextValue => object
   const contextValue = useContext(LoginContext);
+  let currentPath = useHistory().location.pathname;
 
-  console.log(contextValue.userStateHook.username);
   let login_check = contextValue.userStateHook.username === "guest";
+  const redirect_to = login_check ? "/login" : "/home";
+
+  // Note:- ignore the comments below, for test purposes only
+  //let currentLocation = useLocation();
+  //console.log(redirect_to);
+  //console.log(contextValue.userStateHook.username);
+  //console.log("currentPath: " + currentPath);
+  //console.log("currentLocation: " + currentLocation.pathname);
 
   return (
     <Router>
+      <Redirect exact from={currentPath} to={redirect_to} />
       <Switch>
-        {login_check ? (
-          <Route path="/login">
+        <Route exact path={redirect_to}>
+          {login_check ? (
             <div className="landing_page">
               <div className="welcome_div">
                 <h1 className="welcome_heading">Welcome to chatter chatter </h1>
@@ -33,29 +44,13 @@ const LandingPage = () => {
               {/* login page */}
               <LoginLayout />{" "}
             </div>
-          </Route>
-        ) : (
-          <Route path="/home">
-            {/*
-				Route path ="/home"  will take us to the homepage if the path is set to /home
-			*/}
-            <HomePage />{" "}
-          </Route>
-        )}
-
-        {/*
-			- Redirecting the path to either /login or /home depending upon the state
-			  of login_check<boolean>. if login_check is true then that means we need to be logged in
-
-			- Using push here in Redirect will push a new path to the stack in history
-		*/}
-
-        <Redirect to={login_check ? "/login" : "/home"} />
+          ) : (
+            <HomePage />
+          )}
+        </Route>
       </Switch>
     </Router>
   );
 };
 
 export default LandingPage;
-
-// commenting in inside of jsx =>   {/* comment */}
