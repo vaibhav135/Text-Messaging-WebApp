@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import GroupContext from "../../context_provider/group_context";
 
 const Groups = ({ groupsList }: { groupsList: string[] }) => {

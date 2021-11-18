@@ -122,6 +122,36 @@ select:-webkit-autofill:focus {
 }
 
 
+#login_registration_footer{
+	display: inline-flex;
+	align-items: center;
+	color: #023E8A;
+	margin-top: 5px;
+}
+
+#switch_register, #switch_login{
+	margin:0;
+}
+
+#switch_register:hover, #switch_login:hover{
+	color: #03045E;
+	cursor: pointer;
+}
+
+/*warning and success messages for login and registration*/
+.registrationLoginError, .registrationSuccess{
+	margin:0;
+	padding-bottom: 19px;
+}
+
+.registrationLoginError{
+	color:#a8070b;
+}
+
+.registrationSuccess{
+	color: #078725;
+}
+
 /*=========================================================================================*/
 /*submit button css from here*/
 

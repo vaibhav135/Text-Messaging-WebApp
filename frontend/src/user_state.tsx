@@ -1,7 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react";
-import {
-  BrowserRouter as Router,
-} from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import LoginContext from "./components/context_provider/login_context";
 import LandingPage from "./components/login_page/landing_page";
 import userData from "./interface/user_interface";
@@ -16,6 +14,7 @@ const UserState = () => {
   // info: userData is an object type which contains
   // username and password.
   const [userStateHook, setUserStateHook] = useState<userData>(guestUser);
+  const [jwtToken, setJWTtoken] = useState("");
 
   const setLogoutState = useCallback(
     (state: boolean) => {
@@ -27,21 +26,27 @@ const UserState = () => {
     [guestUser]
   );
 
-  const value = useMemo(
-    () => ({
-      userStateHook,
-      setUserStateHook,
-      setLogoutState,
-    }),
-    [userStateHook, setUserStateHook, setLogoutState]
-  );
+  //const value = useMemo(
+  //() => ({
+  //userStateHook,
+  //setUserStateHook,
+  //}),
+  //[userStateHook, setUserStateHook ]
+  //);
+  const value = {
+    userStateHook,
+    setUserStateHook,
+    jwtToken,
+    setJWTtoken,
+    setLogoutState,
+  };
 
   return (
-	  <Router >
+    <Router>
       <LoginContext.Provider value={value}>
         <LandingPage />
       </LoginContext.Provider>
-	  </Router>
+    </Router>
   );
 };
 

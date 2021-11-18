@@ -1,9 +1,9 @@
 /**
  * author: V.S.B (Vaibhav Singh Bisht)
  *
- * note: If you are reading this peice of code then I might
- * tell you that at the time of writing this code. I am still
- * a noob programmer and learning so please don't be critical
+ * note: If you are reading this peice of code then I want
+ * to tell you that at the time of writing this code. I am
+ * still a noob programmer and learning so please don't be critical
  * about the code and contribute to the project if you want.
  * Thank you
  * Happy Coding
@@ -14,7 +14,7 @@
 
 import express from "express";
 import { createServer } from "http";
-import {server} from "socket.io":
+import { Server } from "socket.io";
 import * as dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
@@ -45,9 +45,8 @@ app.get("/", (req, res) => {
   res.send("hello world");
 });
 
-
-const io = new Server(httpServer, { /* options */ });
-io.on("connection", (socket) => {  // ...});
+//const io = new Server(httpServer, { [> options <] });
+//io.on("connection", (socket) => {  // ...});
 
 /**
  * Connecting to the mongoDB atlas database
@@ -64,7 +63,7 @@ const port = process.env.PORT ?? 5000;
 /**
  * app.listen(port) will not work here,
  * as it creates a new http Sever
-*/
+ */
 
 httpServer.listen(port, () => {
   console.log(`Timezones by location application is running on port ${port}.`);

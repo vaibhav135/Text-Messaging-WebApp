@@ -45,6 +45,7 @@
 	background-color: #ADE8F4;
 	border-right: 1px solid #90E0EF;
 	border-left: 1px solid #90E0EF;
+	overflow-y: auto;
 }
 
 

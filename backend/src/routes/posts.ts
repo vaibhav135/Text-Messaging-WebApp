@@ -1,18 +1,23 @@
 import express from "express";
-import {
-  getUsers,
-  getSpecificUser,
-  createUser,
-  deleteUser,
-  updateUser,
-} from "../controllers/controller_posts";
+import { addUser, loginUser } from "../controllers/controller_posts";
 
 const router = express.Router();
 
-router.get("/", getUsers);
-router.get("/:id", getSpecificUser);
-router.post("/addUsers", createUser);
-router.delete("/delete/:id", deleteUser);
-router.patch("/update/:id", updateUser);
+router.post("/api/addUser", addUser);
+router.post("/api/loginUser", loginUser);
 
 export default router;
+
+//import {
+//getUsers,
+//getSpecificUser,
+//createUser,
+//deleteUser,
+//updateUser,
+//} from "../controllers/controller_posts";
+
+//router.get("/", getUsers);
+//router.get("/api/:id", getSpecificUser);
+//router.post("/api/addUsers", createUser);
+//router.delete("/api/delete/:id", deleteUser);
+//router.patch("/api/update/:id", updateUser);

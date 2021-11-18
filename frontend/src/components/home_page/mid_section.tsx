@@ -21,6 +21,19 @@ const MidSection = (props: any) => {
     "group5",
     "group6",
     "group7",
+    "group8",
+    "group9",
+    "group10",
+    "group11",
+    "group12",
+    "group13",
+    "group14",
+    "group15",
+    "group16",
+    "group17",
+    "group18",
+    "group19",
+    "group20",
   ];
 
   // test
