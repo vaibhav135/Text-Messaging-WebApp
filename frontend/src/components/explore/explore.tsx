@@ -5,7 +5,7 @@ import FetchAllGroups from "../fetch_data/fetch_all_groups";
 
 //css in homepage.css
 
-const Explore = () => {
+const Explore = (props: any) => {
   const groups = FetchAllGroups().groups;
 
   // NOTE:- the copy variable is temporary right now

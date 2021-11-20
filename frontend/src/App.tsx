@@ -1,6 +1,6 @@
 import React from "react";
-import UserState from "./user_state";
-import userData from "./interface/user_interface";
+import LandingPage from "./components/login_page/landing_page";
+import { BrowserRouter as Router } from "react-router-dom";
 import "./App.css";
 
 function App() {
@@ -8,9 +8,11 @@ function App() {
   console.log(React.version);
 
   return (
-    <div className="App">
-      <UserState />
-    </div>
+    <Router>
+      <div className="App">
+        <LandingPage />
+      </div>
+    </Router>
   );
 }
 

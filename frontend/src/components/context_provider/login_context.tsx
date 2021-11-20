@@ -2,11 +2,8 @@ import { createContext } from "react";
 import userData from "../../interface/user_interface";
 
 export const default_user_value = {
-  userStateHook: { username: "guest", password: "" },
-  setUserStateHook: (userStateHook: userData) => {},
-  jwtToken: "",
-  setJWTtoken: (state: string) => {},
-  setLogoutState: (state: boolean) => {},
+  userInfoHook: { id: null, username: "guest" },
+  setUserInfoHook: (userStateHook: userData) => {},
 };
 
 const LoginContext = createContext(default_user_value);

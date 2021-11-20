@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import MidSection from "./mid_section";
 import CreateGroup from "../create_group/create_group";
 import PopUpContext from "../context_provider/popup_context";
+import LoginContext from "../context_provider/login_context";
 import ExploreContext from "../context_provider/explore_context";
 import FetchGroupsJoined from "../fetch_data/fetch_groups_joined";
 import TopNavigation from "../navigation/navigation_bar/navigation_bar";
-
 import "./home_page.css";
 import "./../navigation/navigation.css";
 
@@ -16,7 +16,11 @@ const HomePage = () => {
   const popUp_value = { popUpState, setPopUpState };
   const explore_value = { exploreState, setExploreState };
 
+  const { userInfoHook } = useContext(LoginContext);
+  const { id, username } = userInfoHook;
   const joinedGroupsList: string[] = FetchGroupsJoined();
+
+  console.log("welcome to home");
 
   return (
     <div className="home_page">
@@ -31,7 +35,11 @@ const HomePage = () => {
         {popUpState ? (
           <div className="popup_parent" style={{ display: "block" }}>
             <div className="background_blur"> </div>
-            <CreateGroup closeState={() => setPopUpState(!popUpState)} />
+            <CreateGroup
+              id={id}
+              username={username}
+              closeState={() => setPopUpState(!popUpState)}
+            />
           </div>
         ) : (
           <> </>
@@ -49,10 +57,12 @@ const HomePage = () => {
 			TopNavigation is a navigation bar on top of the homepage that contains four
 			buttons which are HomePage, Explore, CreateGroup and Logout.
 		*/}
-          <TopNavigation />
+          <TopNavigation id={id} username={username} />
           <MidSection
             exploreState={exploreState}
             joinedGroupsList={joinedGroupsList}
+            id={id}
+            username={username}
           />
         </ExploreContext.Provider>
       </PopUpContext.Provider>

@@ -1,10 +1,16 @@
 import express from "express";
-import { addUser, loginUser } from "../controllers/controller_posts";
+import {
+  addUser,
+  loginUser,
+  createGroup,
+} from "../controllers/controller_posts";
+import VerifyToken from "../token_verification/verify_token";
 
 const router = express.Router();
 
 router.post("/api/addUser", addUser);
 router.post("/api/loginUser", loginUser);
+router.post("/api/creategroup", VerifyToken, createGroup);
 
 export default router;
 

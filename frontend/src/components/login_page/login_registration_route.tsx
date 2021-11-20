@@ -1,36 +1,26 @@
-import { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useHistory,
-  Redirect,
-} from "react-router-dom";
-import LoginRegistrationLayout from "./login_registration_layout";
+import { useEffect } from "react";
+import { Route, Switch, useHistory } from "react-router-dom";
+import LoginLayout from "./login_layout";
+import RegistrationLayout from "./registration_layout";
 
 const LoginRegistrationRoute = () => {
-  const [loginState, setLoginState] = useState(false);
-  const newPath = loginState ? "/register" : "/login";
-  let history = useHistory();
-  console.log(history.location.pathname);
-  console.log(loginState);
+  const history = useHistory();
 
-  const changeLoginState = () => {
-    setLoginState(!loginState);
-  };
+  useEffect(() => {
+    history.push("/auth/login");
+  });
 
   return (
-    <Router>
-      <Redirect to={newPath} />
+    <>
       <Switch>
-        <Route exact path={newPath}>
-          <LoginRegistrationLayout
-            loginState={loginState}
-            changeLoginState={changeLoginState}
-          />
+        <Route exact path="/auth/login">
+          <LoginLayout />
+        </Route>
+        <Route exact path="/auth/register">
+          <RegistrationLayout />
         </Route>
       </Switch>
-    </Router>
+    </>
   );
 };
 

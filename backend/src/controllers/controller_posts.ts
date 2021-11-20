@@ -2,6 +2,7 @@ import mongoose, { Mongoose } from "mongoose";
 import express from "express";
 import bcrypt from "bcrypt";
 import CreateUser from "../models/create_user";
+import CreateGroup from "../models/groups_model";
 import * as dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
@@ -54,7 +55,11 @@ export const loginUser = async (req: any, res: any) => {
   const { username, password } = req.body;
   const user: userType = await CreateUser.findOne({ username }).lean();
   if (!user) {
-    return res.json({ status: "error", error: "Invalid username/password" });
+    return res.json({
+      status: "error",
+      auth: false,
+      error: "Invalid username/password",
+    });
   }
 
   if (await bcrypt.compare(password, user.password)) {
@@ -68,12 +73,48 @@ export const loginUser = async (req: any, res: any) => {
       JWT_TOKEN
     );
 
-    return res.json({ status: "ok", data: token });
+    return res.json({
+      id: user._id,
+      username: user.username,
+      auth: true,
+      data: token,
+      status: "ok",
+    });
   }
 
-  res.json({ status: "error", error: "Invalid username/password" });
+  res.json({
+    status: "error",
+    auth: false,
+    error: "Invalid username/password",
+  });
 };
 
+export const createGroup = async (req: any, res: any) => {
+  const { name, description, tags, createdOn, admins, moderators, members } =
+    req.body;
+  //const token = req.headers["x-access-token"];
+  //console.log(token);
+  //VerifyToken(token);
+
+  const newGroup = new CreateGroup({
+    name,
+    description,
+    tags,
+    createdOn,
+    admins,
+    moderators,
+    members,
+  });
+  try {
+    await newGroup.save();
+    return res.json({ status: "ok" });
+  } catch (error) {
+    res.json({
+      status: "error",
+      error: (error as Error).message,
+    });
+  }
+};
 //export const getUsers = async (req: any, res: any) => {
 //try {
 //const users = await CreateUser.find();

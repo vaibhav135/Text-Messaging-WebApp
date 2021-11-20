@@ -1,7 +1,15 @@
 import { useState, useContext } from "react";
 import GroupContext from "../../context_provider/group_context";
 
-const Groups = ({ groupsList }: { groupsList: string[] }) => {
+const Groups = ({
+  id,
+  username,
+  groupsList,
+}: {
+  id: null | any;
+  username: string;
+  groupsList: string[];
+}) => {
   // TODO:- currently I've selected the first group as group selected later when,
   // i'll connect the frontend to the backend then. I'll create a variable named
   // group_selected in the the database which will basically tell, what group I

@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 import PopUpContext from "../../context_provider/popup_context";
-import LoginContext from "../../context_provider/login_context";
 import ExploreContext from "../../context_provider/explore_context";
+import { useHistory } from "react-router-dom";
 
 const TopNavigation = (props: any) => {
   const { popUpState, setPopUpState } = useContext(PopUpContext);
-  const logout_context = useContext(LoginContext);
   const { setExploreState } = useContext(ExploreContext);
+  const history = useHistory();
 
   const logout = (e: any) => {
     e.preventDefault();
-    logout_context.setLogoutState(true);
+    history.push("/auth");
   };
 
   const explore = (e: any) => {

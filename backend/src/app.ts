@@ -4,7 +4,7 @@
  * note: If you are reading this peice of code then I want
  * to tell you that at the time of writing this code. I am
  * still a noob programmer and learning so please don't be critical
- * about the code and contribute to the project if you want.
+ * about the code practises and contribute to the project if you want.
  * Thank you
  * Happy Coding
  *
@@ -25,7 +25,11 @@ dotenv.config();
 const app = express();
 const httpServer = createServer(app);
 
-app.use(cors());
+const corsConfig = {
+  credentials: true,
+  origin: true,
+};
+app.use(cors(corsConfig));
 app.use(express.json());
 app.use("/post", routes);
 

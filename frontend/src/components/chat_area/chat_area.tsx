@@ -1,9 +1,7 @@
-import React, { useContext, useState } from "react";
-
+import { useContext, useState } from "react";
 import MessageBox from "./message_box";
-import LoginContext from "../context_provider/login_context";
 
-const ChatArea = () => {
+const ChatArea = (props: any) => {
   type messageDataType = {
     message: string;
     metadata: {
@@ -17,7 +15,6 @@ const ChatArea = () => {
   const [messageArrayObject, setMessageArrayObject] = useState<
     messageDataType[]
   >([]);
-  const { userStateHook } = useContext(LoginContext);
 
   function timeConverter(UNIX_timestamp: number) {
     var a = new Date(UNIX_timestamp * 1000);
@@ -61,7 +58,7 @@ const ChatArea = () => {
         message: messageValue,
         metadata: {
           time: currentTime,
-          sender: userStateHook.username,
+          sender: props.username,
           sendTo: "",
         },
       };

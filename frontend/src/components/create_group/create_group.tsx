@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 
 import Category from "./category";
 import PopUpContext from "../context_provider/popup_context";
-//import { IconContext } from "react-icons";
 import { AiOutlineClose } from "react-icons/ai";
 
 // Css in home_page.css
@@ -16,6 +15,15 @@ const CreateGroup = (props: any) => {
   const [descriptionTextArea, setDescriptionTextArea] = useState("");
   const [categoryList, setCategoryList] = useState<string[]>([]);
   const { popUpState, setPopUpState } = useContext(PopUpContext);
+
+  const url = process.env.REACT_APP_BACKEND_URL;
+  console.log(url);
+  console.log(props.id + "\n" + props.username);
+
+  //send date in ISO-8601 format
+  const date = new Date().toISOString();
+  console.log(date);
+  console.log(new Date(date));
 
   const categories: string[] = [
     "memes",
@@ -46,15 +54,49 @@ const CreateGroup = (props: any) => {
     "dating",
     "cosmos",
   ];
+  //console.log(typeof `Bearer ${localStorage.getItem("token")}`);
 
   // submit button will trigger this function
-  const createGroupSubmit = (e: any) => {
+  const createGroupSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(groupName);
-    console.log(descriptionTextArea);
-    console.log(categoryList);
+    //console.log(groupName);
+    //console.log(descriptionTextArea);
+    //console.log(categoryList);
 
     //post request here
+    //		name: {type: String, required: true, unique:true},
+    //description: {type: String},
+    //tags:{type:[String]},
+    //createdOn: {type: Date, required: true},
+    //admins: {type: String,required: true },
+    //moderators: {type: [Schema.Types.ObjectId] },
+    //members: {type: [Schema.Types.ObjectId]},
+
+    const data = {
+      name: groupName,
+      description: descriptionTextArea,
+      tags: categoryList,
+      createdOn: new Date(),
+      admins: props.id,
+      moderators: [props.id],
+      members: [props.id],
+    };
+
+    const res = await fetch(url + "post/api/createGroup", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "x-access-token": `Bearer ${localStorage.getItem("token")}`,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => res.json());
+
+    if (res.status === "ok") {
+      console.log(res);
+    } else {
+      console.log(res.error);
+    }
 
     setPopUpState(!popUpState);
   };
