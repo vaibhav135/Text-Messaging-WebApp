@@ -1,8 +1,14 @@
 import { useState } from "react";
+
+import Profile from "../profile/profile";
 import HomePage from "../home_page/home_page";
 import LandingBasicLayout from "./landing_basic_layout";
 import { Switch, Route, Redirect } from "react-router-dom";
 import LoginContext from "../context_provider/login_context";
+import {
+  ProfileContext,
+  userProfileHookType,
+} from "../context_provider/profile_context";
 import "./login_page.css";
 
 const LandingPage = () => {
@@ -13,19 +19,45 @@ const LandingPage = () => {
     username: "guest",
   });
 
-  const value = { userInfoHook, setUserInfoHook };
+  const [userProfileHook, setUserProfileHook] = useState<any>({
+    userId: "",
+    username: "",
+    profile_name: "",
+    gender: "",
+    image: "",
+    hobbies: [],
+    social_media: {
+      facebook: "",
+      instagram: "",
+      github: "",
+    },
+  });
+  const [skip, setSkip] = useState<boolean>(false);
+
+  const userInfoHookValue = { userInfoHook, setUserInfoHook };
+  const userProfileHookValue = {
+    userProfileHook,
+    setUserProfileHook,
+    skip,
+    setSkip,
+  };
 
   return (
-    <LoginContext.Provider value={value}>
-      <Switch>
-        <Redirect exact from="/" to="/auth" />
-        <Route path="/auth">
-          <LandingBasicLayout />
-        </Route>
-        <Route path="/home">
-          <HomePage />
-        </Route>
-      </Switch>
+    <LoginContext.Provider value={userInfoHookValue}>
+      <ProfileContext.Provider value={userProfileHookValue}>
+        <Switch>
+          <Redirect exact from="/" to="/auth" />
+          <Route path="/auth">
+            <LandingBasicLayout />
+          </Route>
+          <Route path="/home/profile">
+            <Profile />
+          </Route>
+          <Route path="/home">
+            <HomePage />
+          </Route>
+        </Switch>
+      </ProfileContext.Provider>
     </LoginContext.Provider>
   );
 };

@@ -5,9 +5,6 @@
  */
 
 const FetchAllGroups = () => {
-  // fetch the groups here.
-  // Dummy object for list of groups
-  // update the object after fetching the groups
   const groups = {
     groups: [
       {

@@ -60,7 +60,7 @@ const MidSection = (props: any) => {
 					Explore section:
 			   	*/}
 
-            <Explore id={props.id} username={props.username} />
+            <Explore userId={props.userId} username={props.username} />
           </div>
         ) : (
           <div className="middle_section">
@@ -68,12 +68,12 @@ const MidSection = (props: any) => {
 				Groups will show the list of groups that the user have joined
 			   */}
             <Groups
-              id={props.id}
+              userId={props.userId}
               username={props.username}
               groupsList={joinedGroupsList}
             />
             {props.joinedGroupsList.length > 0 ? (
-              <ChatArea id={props.id} username={props.username} />
+              <ChatArea userId={props.userId} username={props.username} />
             ) : (
               <NoGroupFound />
             )}

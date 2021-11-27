@@ -19,7 +19,11 @@ import * as dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 
+// middleware routes
 import routes from "./routes/posts";
+import getRouter from "./routes/get";
+import patchRouter from "./routes/patch";
+import deleteRoute from "./routes/delete";
 
 dotenv.config();
 const app = express();
@@ -32,6 +36,8 @@ const corsConfig = {
 app.use(cors(corsConfig));
 app.use(express.json());
 app.use("/post", routes);
+app.use("/get", getRouter);
+app.use("/patch", patchRouter);
 
 const user = process.env.MONGODB_USER ?? "";
 const password = process.env.MONGODB_PASSWORD ?? "";

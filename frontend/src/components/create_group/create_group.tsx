@@ -18,7 +18,7 @@ const CreateGroup = (props: any) => {
 
   const url = process.env.REACT_APP_BACKEND_URL;
   console.log(url);
-  console.log(props.id + "\n" + props.username);
+  console.log(props.userId + "\n" + props.username);
 
   //send date in ISO-8601 format
   const date = new Date().toISOString();
@@ -77,9 +77,9 @@ const CreateGroup = (props: any) => {
       description: descriptionTextArea,
       tags: categoryList,
       createdOn: new Date(),
-      admins: props.id,
-      moderators: [props.id],
-      members: [props.id],
+      admins: props.userId,
+      moderators: [props.userId],
+      members: [props.userId],
     };
 
     const res = await fetch(url + "post/api/createGroup", {

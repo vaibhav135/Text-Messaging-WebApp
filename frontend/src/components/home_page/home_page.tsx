@@ -36,7 +36,7 @@ const HomePage = () => {
           <div className="popup_parent" style={{ display: "block" }}>
             <div className="background_blur"> </div>
             <CreateGroup
-              id={id}
+              userId={id}
               username={username}
               closeState={() => setPopUpState(!popUpState)}
             />
@@ -57,11 +57,11 @@ const HomePage = () => {
 			TopNavigation is a navigation bar on top of the homepage that contains four
 			buttons which are HomePage, Explore, CreateGroup and Logout.
 		*/}
-          <TopNavigation id={id} username={username} />
+          <TopNavigation userId={id} username={username} />
           <MidSection
             exploreState={exploreState}
             joinedGroupsList={joinedGroupsList}
-            id={id}
+            userId={id}
             username={username}
           />
         </ExploreContext.Provider>

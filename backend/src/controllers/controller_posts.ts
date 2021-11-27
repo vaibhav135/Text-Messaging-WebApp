@@ -1,10 +1,13 @@
 import mongoose, { Mongoose } from "mongoose";
-import express from "express";
-import bcrypt from "bcrypt";
-import CreateUser from "../models/create_user";
-import CreateGroup from "../models/groups_model";
 import * as dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import express from "express";
+import bcrypt from "bcrypt";
+import axios from "axios";
+
+import CreateUser from "../models/create_user";
+import CreateGroup from "../models/groups_model";
+import CreateUserProfile from "../models/user_profile_model";
 
 dotenv.config();
 const router = express.Router();
@@ -15,6 +18,29 @@ type userType = {
   username: string;
   password: string;
   _id: string;
+};
+
+function getRandomText(length: number) {
+  let result = "";
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+const getImage = async () => {
+  let res;
+  try {
+    res = await axios.get(
+      "https://api.multiavatar.com/" + JSON.stringify(getRandomText(5))
+    );
+  } catch (error) {
+    console.error(error);
+  }
+  return res;
 };
 
 //Registration middleware
@@ -39,6 +65,31 @@ export const addUser = async (req: any, res: any) => {
       password,
     });
     console.log("User created successfully: ", response);
+    const user: userType = await CreateUser.findOne({ username }).lean();
+    const image = await getImage().then((res: any) => res.data);
+    console.log(image);
+
+    const new_user_profile = {
+      user_id: user._id,
+      username: username,
+      createdOn: new Date().toISOString(),
+      profile_name: "Anonymous",
+      gender: "",
+      image: image,
+      hobbies: [],
+      Social_media: {
+        facebook: "",
+        instagram: "",
+        github: "",
+      },
+    };
+    const response_new_user_profile = await CreateUserProfile.create(
+      new_user_profile
+    );
+    console.log(
+      "User profile created successfully: ",
+      response_new_user_profile
+    );
   } catch (error: any) {
     if (error.code === 11000) {
       // duplicate key

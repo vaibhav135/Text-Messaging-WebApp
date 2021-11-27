@@ -2,11 +2,11 @@ import { useState, useContext } from "react";
 import GroupContext from "../../context_provider/group_context";
 
 const Groups = ({
-  id,
+  userId,
   username,
   groupsList,
 }: {
-  id: null | any;
+  userId: null | any;
   username: string;
   groupsList: string[];
 }) => {
