@@ -2,7 +2,7 @@ import { createContext } from "react";
 import userData from "../../interface/user_interface";
 
 export const default_user_value = {
-  userInfoHook: { id: null, username: "guest" },
+  userInfoHook: { id: "", username: "guest" },
   setUserInfoHook: (userStateHook: userData) => {},
 };
 

@@ -1,4 +1,4 @@
 export default interface userData {
-  id: null | any;
+  id: string;
   username: string;
 }

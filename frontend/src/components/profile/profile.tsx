@@ -1,56 +1,102 @@
 import { useContext, useEffect, useState } from "react";
 
-import InterestList from "./interest_list";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 import GenerateAvatar from "./generate_avatar";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
+
+import InterestList from "./interest_list";
 import LoginContext from "../context_provider/login_context";
 import TopNavigation from "../navigation/navigation_bar/navigation_bar";
-import { AiOutlineCloseCircle } from "react-icons/ai";
-import { BsGenderMale } from "react-icons/bs";
-import { IconContext } from "react-icons";
+import { ProfileContext } from "../context_provider/profile_context";
 
 import "./profile.css";
-import { useHistory } from "react-router-dom";
 
 const Profile = () => {
+  const { userProfileHook, setUserProfileHook, skip, setSkip } =
+    useContext(ProfileContext);
   const { userInfoHook } = useContext(LoginContext);
-  const [username, setUserName] = useState(userInfoHook.username);
-  const [profileName, setProfileName] = useState("");
-  const [profileDescription, setProfileDescription] = useState("");
+  const [username, setUserName] = useState(userProfileHook.username);
+  const [profileName, setProfileName] = useState(userProfileHook.profile_name);
+  const [profileDescription, setProfileDescription] = useState(
+    userProfileHook.description
+  );
   const [dataListInput, setDataListInput] = useState("");
-  const [hobbies, setHobbies] = useState<String[]>([]);
-  const [gender, setGender] = useState("");
+  const [hobbies, setHobbies] = useState<string[]>(userProfileHook.hobbies);
+  const [gender, setGender] = useState(userProfileHook.gender);
   const [socialMedia, setSocialMedia] = useState({
-    facebook: "",
-    instagram: "",
-    github: "",
+    facebook: userProfileHook.social_media.facebook,
+    instagram: userProfileHook.social_media.instagram,
+    github: userProfileHook.social_media.github,
   });
-  const [profilePicture, setProfilePicture] = useState("");
-  const [skipBtn, setSkipBtn] = useState(true);
-  const [refreshPage, setRefreshPage] = useState(true);
+  const [profilePicture, setProfilePicture] = useState(userProfileHook.image);
+  const [refreshPage, setRefreshPage] = useState(false);
+  const [profileSubmitState, setProfileSubmitState] = useState(false);
 
   function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
   const history = useHistory();
+  const url: string = process.env.REACT_APP_BACKEND_URL || "";
 
   useEffect(() => {
     if (refreshPage) {
       setRefreshPage(!refreshPage);
       const avatar_string = async () => {
         await sleep(1000);
-        const someVar = await GenerateAvatar().then((res: any) =>
-          setProfilePicture(res.data)
-        );
+        await GenerateAvatar().then((res: any) => setProfilePicture(res.data));
       };
       avatar_string();
       //console.log(avatar_string);
     }
   }, [refreshPage]);
 
+  useEffect(() => {
+    if (profileSubmitState) {
+      const data = {
+        username: username,
+        profile_name: profileName,
+        description: profileDescription,
+        gender: gender,
+        image: profilePicture,
+        hobbies: hobbies,
+        social_media: socialMedia,
+      };
+      const updateUserDate = async () => {
+        await axios
+          .patch(`${url}patch/api/updateUserProfile/${userInfoHook.id}`, data, {
+            headers: {
+              "Content-Type": "application/json",
+              "x-access-token": `Bearer ${localStorage.getItem("token")}`,
+            },
+          })
+          .then((res) => {
+            if (res.data.status === "ok") {
+              const dataForProfileContext = {
+                userId: userInfoHook.id,
+                username: username,
+                profile_name: profileName,
+                description: profileDescription,
+                gender: gender,
+                image: profilePicture,
+                hobbies: hobbies,
+                social_media: socialMedia,
+              };
+              setUserProfileHook(dataForProfileContext);
+              history.push("/home");
+            }
+          })
+          .catch((error) => console.log(error));
+      };
+      updateUserDate();
+      setProfileSubmitState(!profileSubmitState);
+    }
+  }, [profileSubmitState]);
+
   //console.log(profile_picture());
-  const profileSubmit = (events: any) => {
+  const profileSubmit = async (events: any) => {
     events.preventDefault();
-    history.push("/home");
+    setProfileSubmitState(!profileSubmitState);
   };
 
   const generateAnotherAvatar = () => {
@@ -63,9 +109,9 @@ const Profile = () => {
     profileImage = `data:image/svg+xml;utf8,${encodeURIComponent(
       profilePicture
     )}`;
-    console.log(typeof profileImage);
   }
 
+  //getting all the list of hobbies/interest :- hardcoded values
   const interest_list = InterestList();
 
   const removeInterests = (value: String) => {
@@ -78,20 +124,15 @@ const Profile = () => {
 
   return (
     <div className="profile_main_div">
-      <TopNavigation
-        className="top_navigation"
-        userId={userInfoHook.id}
-        username={username}
-      />
       <div className="profile_div">
         <div className="profile_header_div">
-          {skipBtn ? (
+          {skip ? (
+            <> </>
+          ) : (
             <h3 className="profile_skip_btn" onClick={skipTohome}>
               {" "}
               skip{" "}
             </h3>
-          ) : (
-            <> </>
           )}{" "}
           <h1 className="profile_heading"> Profile </h1>
         </div>
@@ -136,7 +177,7 @@ const Profile = () => {
           </label>
           <select
             id="profile_gender"
-            defaultValue="Select a gender"
+            value={gender === "" ? "please choose your gender" : gender}
             onChange={(e) => setGender(e.target.value)}
           >
             <option value="male"> male</option>

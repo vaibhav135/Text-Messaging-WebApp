@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 import LoginContext from "../context_provider/login_context";
@@ -9,26 +8,20 @@ import { ProfileContext } from "../context_provider/profile_context";
 const LoginRegistrationLayout = (props: any) => {
   const [uname, setUname] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  //const [refreshPage, setRefreshPage] = useState(false);
-  const [registerState, setRegisterState] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [loginState, setLoginState] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [profileState, setProfileState] = useState(false);
+  const [registerState, setRegisterState] = useState(false);
 
   const { userInfoHook, setUserInfoHook } = useContext(LoginContext);
-  const { userProfileHook, setUserProfileHook, skip, setSkip } =
-    useContext(ProfileContext);
+  const { setUserProfileHook, skip, setSkip } = useContext(ProfileContext);
 
   const url: string = process.env.REACT_APP_BACKEND_URL || "";
-  const history = useHistory();
 
-  //useEffect(() => {
-  //if (refreshPage) {
-  //setRefreshPage(!refreshPage);
-  //}
-  //}, [refreshPage]);
+  // ================================================================================//
+  // useEffect() hooks
 
   useEffect(() => {
     if (registerState) {
@@ -40,7 +33,7 @@ const LoginRegistrationLayout = (props: any) => {
           username: uname,
           password: password,
         };
-        const res = await fetch(`${url}post/api/addUser`, {
+        await fetch(`${url}post/api/addUser`, {
           method: "POST", // or 'PUT'
           headers: {
             "Content-Type": "application/json",
@@ -73,7 +66,7 @@ const LoginRegistrationLayout = (props: any) => {
   useEffect(() => {
     if (profileState) {
       const getProfile = async () => {
-        const res = await axios
+        await axios
           .get(`${url}get/api/getUserProfile/${userInfoHook.id}`, {
             headers: {
               "Content-Type": "application/json",
@@ -87,6 +80,7 @@ const LoginRegistrationLayout = (props: any) => {
               const username = result.username;
               const user_id = result.user_id;
               const profile_name = result.profile_name;
+              const description = result.description;
               const gender = result.gender;
               const hobbies = result.hobbies;
               const image = result.image;
@@ -103,16 +97,17 @@ const LoginRegistrationLayout = (props: any) => {
                 userId: user_id,
                 username: username,
                 profile_name: profile_name,
+                description: description,
                 gender: gender,
                 image: image,
                 hobbies: hobbies,
                 social_media: social_media,
               });
               if (skip) {
-                console.log("hello home");
+                //console.log("to home...");
                 props.pathToHome();
               } else {
-                console.log("hello profile");
+                //console.log("to profile...");
                 props.pathToProfile();
               }
             } else {
@@ -133,7 +128,7 @@ const LoginRegistrationLayout = (props: any) => {
           password: password,
         };
 
-        const res = await fetch(`${url}post/api/loginUser`, {
+        await fetch(`${url}post/api/loginUser`, {
           method: "POST", // or 'PUT'
           headers: {
             "Content-Type": "application/json",
@@ -163,6 +158,9 @@ const LoginRegistrationLayout = (props: any) => {
     }
   }, [loginState]);
 
+  // ================================================================================//
+  // useEffect() hooks end here
+
   const changeLoginState = (e: any) => {
     e.preventDefault();
     setLoginState(!loginState);
@@ -177,56 +175,6 @@ const LoginRegistrationLayout = (props: any) => {
   const changePasswordVisualState = () => {
     setShowPassword(!showPassword);
   };
-
-  //const getProfile = async (value: string) => {
-  //console.log(`username: ${userInfoHook.username} \n id: ${userInfoHook.id}`);
-  //const res = await axios
-  //.get(`${url}get/api/getUserProfile/${value}`, {
-  //headers: {
-  //"Content-Type": "application/json",
-  //"x-access-token": `Bearer ${localStorage.getItem("token")}`,
-  //},
-  //})
-  //.then((res) => {
-  //console.log(res);
-  //if (res.status === 200) {
-  //const result = res.data.data;
-  //const username = result.username;
-  //const user_id = result.user_id;
-  //const profile_name = result.profile_name;
-  //const gender = result.gender;
-  //const hobbies = result.hobbies;
-  //const image = result.image;
-  //const social_media = result.Social_media;
-
-  //if (
-  //profile_name.length !== "Anonymous" &&
-  //gender.length > 0 &&
-  //hobbies.length > 0
-  //) {
-  //setSkip(true);
-  //}
-  //setUserProfileHook({
-  //userId: user_id,
-  //username: username,
-  //profile_name: profile_name,
-  //gender: gender,
-  //image: image,
-  //hobbies: hobbies,
-  //social_media: social_media,
-  //});
-  //if (skip) {
-  //console.log("hello home");
-  //history.push("/home");
-  //} else {
-  //console.log("hello profile");
-  //history.push("/home/profile");
-  //}
-  //} else {
-  //console.log(res.statusText);
-  //}
-  //});
-  //};
 
   return (
     <div className="login_box">

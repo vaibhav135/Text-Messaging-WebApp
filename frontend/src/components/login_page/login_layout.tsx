@@ -18,13 +18,11 @@ const LoginLayout = () => {
   };
 
   const changePathToProfile = () => {
-    console.log("hello........1");
     setPath("/home/profile");
     setChangePathState(!changePathState);
   };
 
   const changePathTohome = () => {
-    console.log("hello........2");
     setPath("/home");
     setChangePathState(!changePathState);
   };
@@ -43,7 +41,7 @@ const LoginLayout = () => {
     <LoginRegistrationLayout
       headingType="login"
       footerType={footerType}
-      pathToHome={() => changePathTohome}
+      pathToHome={changePathTohome}
       pathToProfile={changePathToProfile}
     />
   );

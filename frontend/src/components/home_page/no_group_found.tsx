@@ -2,10 +2,12 @@ import React, { useContext, useState } from "react";
 
 import PopUpContext from "../context_provider/popup_context";
 import ExploreContext from "../context_provider/explore_context";
+import { useHistory } from "react-router-dom";
 
 const NoGroupFound = (props: any) => {
   const { popUpState, setPopUpState } = useContext(PopUpContext);
   const { setExploreState } = useContext(ExploreContext);
+  const history = useHistory();
 
   return (
     <div className="noGroupFound">
@@ -15,7 +17,7 @@ const NoGroupFound = (props: any) => {
       </h1>{" "}
       <button
         className=".textFontButton buttonGroup"
-        onClick={() => setExploreState(true)}
+        onClick={() => history.push("/home/explore")}
       >
         Explore
       </button>

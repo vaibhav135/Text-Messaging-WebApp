@@ -8,6 +8,7 @@ import CreateUserProfile from "../models/user_profile_model";
 export const updateUserProfile = async (req: any, res: any) => {
   const id = req.params.id;
   const data = req.body;
+  console.log(data);
   try {
     const profile = await CreateUserProfile.updateOne({ user_id: id }, data);
     const doc = await CreateUserProfile.findOne({ user_id: id });

@@ -1,21 +1,17 @@
 import { useState } from "react";
 
-import Profile from "../profile/profile";
 import HomePage from "../home_page/home_page";
 import LandingBasicLayout from "./landing_basic_layout";
 import { Switch, Route, Redirect } from "react-router-dom";
 import LoginContext from "../context_provider/login_context";
-import {
-  ProfileContext,
-  userProfileHookType,
-} from "../context_provider/profile_context";
+import { ProfileContext } from "../context_provider/profile_context";
 import "./login_page.css";
 
 const LandingPage = () => {
   //userStateHook: { id: null, username: "guest" },
   //setUserStateHook: (userStateHook: userData) => {},
   const [userInfoHook, setUserInfoHook] = useState({
-    id: null,
+    id: "",
     username: "guest",
   });
 
@@ -23,6 +19,7 @@ const LandingPage = () => {
     userId: "",
     username: "",
     profile_name: "",
+    description: "",
     gender: "",
     image: "",
     hobbies: [],
@@ -49,9 +46,6 @@ const LandingPage = () => {
           <Redirect exact from="/" to="/auth" />
           <Route path="/auth">
             <LandingBasicLayout />
-          </Route>
-          <Route path="/home/profile">
-            <Profile />
           </Route>
           <Route path="/home">
             <HomePage />

@@ -143,9 +143,6 @@ export const loginUser = async (req: any, res: any) => {
 export const createGroup = async (req: any, res: any) => {
   const { name, description, tags, createdOn, admins, moderators, members } =
     req.body;
-  //const token = req.headers["x-access-token"];
-  //console.log(token);
-  //VerifyToken(token);
 
   const newGroup = new CreateGroup({
     name,
@@ -164,6 +161,41 @@ export const createGroup = async (req: any, res: any) => {
       status: "error",
       error: (error as Error).message,
     });
+  }
+};
+
+export const getMembersData = async (req: any, res: any) => {
+  const { admins, moderators, members } = req.body;
+  console.log(admins);
+  console.log(moderators);
+  console.log(members);
+
+  try {
+    let adminsDataArr = [];
+    let moderatorsDataArr = [];
+    let membersDataArr = [];
+    for (const userId of admins) {
+      const getData = await CreateUserProfile.find({ user_id: userId });
+      adminsDataArr.push(getData);
+    }
+    for (const userId of moderators) {
+      const getData = await CreateUserProfile.find({ user_id: userId });
+      moderatorsDataArr.push(getData);
+    }
+    for (const userId of members) {
+      const getData = await CreateUserProfile.find({ user_id: userId });
+      membersDataArr.push(getData);
+    }
+    return res.json({
+      status: "ok",
+      data: {
+        admin_data: adminsDataArr,
+        moderators_data: moderatorsDataArr,
+        members_data: membersDataArr,
+      },
+    });
+  } catch (error) {
+    return res.json({ status: "error", message: (error as Error).message });
   }
 };
 //export const getUsers = async (req: any, res: any) => {

@@ -5,6 +5,7 @@ const UserProfileModel = new Schema({
   username: { type: String, required: true, unique: true },
   createdOn: { type: Date, required: true },
   profile_name: { type: String },
+  description: { type: String },
   gender: { type: String },
   image: { type: String },
   hobbies: { type: [String] },

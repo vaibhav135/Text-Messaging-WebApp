@@ -4,9 +4,10 @@ export type userProfileHookType = {
   userId: string;
   username: string;
   profile_name: string;
+  description: string;
   gender: string;
   image: string;
-  hobbies: [string] | [];
+  hobbies: string[];
   social_media: {
     facebook: string;
     instagram: string;
@@ -19,6 +20,7 @@ const defaultUserData = {
     userId: "",
     username: "",
     profile_name: "",
+    description: "",
     gender: "",
     image: "",
     hobbies: [],

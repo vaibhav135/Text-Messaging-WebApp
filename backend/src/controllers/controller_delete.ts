@@ -1,5 +1,6 @@
 import express from "express";
 import CreateGroup from "../models/groups_model";
+import { Schema } from "mongoose";
 
 export const deleteMember = async (req: any, res: any) => {
   const { groupId, user_id } = req.body;
@@ -30,9 +31,13 @@ export const deleteModerator = async (req: any, res: any) => {
 
 export const deleteGroup = async (req: any, res: any) => {
   const { groupId, user_id } = req.body;
+  type typeUpdateGroupArray = { admins: Schema.Types.ObjectId[] };
   try {
-    const updatedGroupsArray = await CreateGroup.findOne({ _id: groupId });
-    for (admin of updatedGroupsArray.admins) {
+    const updatedGroupsArray: typeUpdateGroupArray | any =
+      await CreateGroup.findOne({
+        _id: groupId,
+      });
+    for (const admin of updatedGroupsArray.admins) {
       if (user_id === admin) {
         await CreateGroup.update(
           { _id: groupId },

@@ -19,7 +19,7 @@
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	width: 70%;
+	width: 100%;
 	background-color: #CAF0F8;
 	/*justify-content: center;*/
 	align-items: center;
@@ -27,9 +27,9 @@
 }
 
 .noGroupHeading{
-	margin-bottom: 100px;
+	margin-bottom: 150px;
 	margin-top: 50px;
-	font-size: 38px;
+	font-size: 48px;
 }
 
 .buttonGroup{
@@ -57,6 +57,7 @@
 	justify-content: center;
 	height: 100%;
 	background-color: #ADE8F4;
+	position: sticky;
 }
 
 .explore_div{
@@ -64,7 +65,7 @@
 	border-left: 1px solid #90E0EF;
 	border-right: 1px solid #90E0EF;
 	width: 60%;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 .explore_ul{
@@ -83,19 +84,6 @@
 	color: #0077B6;
 }
 
-.explore_li{
-	width:95%;
-	background-color:#90E0EF;
-	height:200px;
-	margin-bottom: 20px;
-	border-radius: 9px;
-	border: 1px solid #48CAE4;
-	box-shadow: 3px 3px 3px 3px #ADE8F4;
-}
-
-.explore_li:hover{
-	background-color: #ADE8F4;
-}
 
 .div_section_explore_list{
 	display: inline-flex;
@@ -104,16 +92,72 @@
 	align-items: center;
 }
 
-.explore_option_logo{
-	position: absolute;
-	right: 24%;
+.explore_li{
+	width:95%;
+	background-color:#90E0EF;
+	height:200px;
+	margin-bottom: 40px;
+	border-radius: 9px;
+	border: 1px solid #48CAE4;
+	box-shadow: 3px 3px 3px 3px #ADE8F4;
+	padding: 10px;
 }
 
-.explore_option_ul{
-	/*display:none;*/
+.explore_li:hover{
+	background-color: #ADE8F4;
+}
+
+.group_heading_div{
+	/*background-color: red;*/
+	text-align: center;
+	width: 50%;
+}
+
+.explore_option_logo{
+	position: relative;
+	left: 20%;
+}
+
+#addUserSVG, #userAddedSVG{
+	width: 30px;
+	height: 30px;
+}
+
+#addUserSVG:hover, #userAddedSVG:hover{
+	cursor: pointer;
+}
+#addUserSVG{
+	fill: #0077B6;
+}
+
+#userAddedSVG{
+	fill: #079465;
+}
+
+.groups_list_description{
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-size: 16px;
+	margin-top: 15px;
+	/*background-color: red;*/
+	text-align: center;
+}
+
+.tags_list_ul{
 	list-style-type: none;
-	background: #0077B6;
-	color: #ADE8F4;
+	display: flex;
+	flex-direction: row;
+	/*background-color: yellowgreen;*/
+	padding: 0;
+	margin-top: 15px;
+	justify-content: center;
+	align-items: center;
+}
+
+.tags_list_li{
+	padding:5px;
+	margin: 5px;
+	border: 1px solid #079465;
+	border-radius: 5px;
 }
 
 /*============  explore section ends  =======================================================*/
@@ -172,7 +216,7 @@
 	flex-direction: row-reverse;
 	align-items: center;
 	margin-top: 30px;
-	margin-bottom: 90px;
+	margin-bottom: 50px;
 }
 
 .heading_popup_page{

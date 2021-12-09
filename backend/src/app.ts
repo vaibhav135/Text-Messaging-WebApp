@@ -38,6 +38,7 @@ app.use(express.json());
 app.use("/post", routes);
 app.use("/get", getRouter);
 app.use("/patch", patchRouter);
+app.use("/delete", deleteRoute);
 
 const user = process.env.MONGODB_USER ?? "";
 const password = process.env.MONGODB_PASSWORD ?? "";

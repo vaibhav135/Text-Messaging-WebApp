@@ -17,13 +17,11 @@ const CreateGroup = (props: any) => {
   const { popUpState, setPopUpState } = useContext(PopUpContext);
 
   const url = process.env.REACT_APP_BACKEND_URL;
-  console.log(url);
-  console.log(props.userId + "\n" + props.username);
 
   //send date in ISO-8601 format
   const date = new Date().toISOString();
-  console.log(date);
-  console.log(new Date(date));
+  //console.log(date);
+  //console.log(new Date(date));
 
   const categories: string[] = [
     "memes",
@@ -59,18 +57,6 @@ const CreateGroup = (props: any) => {
   // submit button will trigger this function
   const createGroupSubmit = async (e: any) => {
     e.preventDefault();
-    //console.log(groupName);
-    //console.log(descriptionTextArea);
-    //console.log(categoryList);
-
-    //post request here
-    //		name: {type: String, required: true, unique:true},
-    //description: {type: String},
-    //tags:{type:[String]},
-    //createdOn: {type: Date, required: true},
-    //admins: {type: String,required: true },
-    //moderators: {type: [Schema.Types.ObjectId] },
-    //members: {type: [Schema.Types.ObjectId]},
 
     const data = {
       name: groupName,
@@ -97,7 +83,7 @@ const CreateGroup = (props: any) => {
     } else {
       console.log(res.error);
     }
-
+    props.setFetchGroup();
     setPopUpState(!popUpState);
   };
 
@@ -143,6 +129,7 @@ const CreateGroup = (props: any) => {
           id="group_name_input"
           value={groupName}
           onChange={(e: any) => setGroupName(e.target.value)}
+          autoComplete="off"
           required
         />
         <label
