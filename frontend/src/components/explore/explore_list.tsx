@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import { FaUserCheck } from "react-icons/fa";
-import { IoMdPersonAdd } from "react-icons/io";
-import { IconContext } from "react-icons/lib";
 import { ReactComponent as AddUserSVG } from "../../assets/add_person.svg";
 import { ReactComponent as UserAddedSVG } from "../../assets/checked.svg";
-
+import {
+  removerUserFromGroup,
+  addUserToGroup,
+} from "../navigation/side_bar/group_actions";
 import { FetchGroupContext } from "../home_page/home_page";
 
 const ExploreList = (props: any) => {
@@ -15,50 +15,9 @@ const ExploreList = (props: any) => {
 
   const url: string = process.env.REACT_APP_BACKEND_URL || "";
   console.log("printing...");
-  const data = {
+  const data: object = {
     groupId: props.value._id,
     user_id: props.userId,
-  };
-
-  const addUserToGroup = async () => {
-    console.log("add user to group");
-    setRequestSent(!requestSent);
-    await axios
-      .patch(`${url}patch/api/updateGroupMember`, data, {
-        headers: {
-          "Content-Type": "application/json",
-          "x-access-token": `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-      .then((res) => {
-        if (res.data.status === "ok") {
-          console.log("request successful");
-        } else {
-          console.log(res.data.error);
-        }
-      });
-    setFetchGroup(!fetchGroup);
-  };
-
-  const removerUserFromGroup = async () => {
-    console.log("remove user from Group");
-    setRequestSent(!requestSent);
-    await axios
-      .delete(`${url}delete/api/removeMember`, {
-        headers: {
-          "Content-Type": "application/json",
-          "x-access-token": `Bearer ${localStorage.getItem("token")}`,
-        },
-        data,
-      })
-      .then((res) => {
-        if (res.data.status === "ok") {
-          console.log("request successful");
-        } else {
-          console.log(res.data.error);
-        }
-      });
-    setFetchGroup(!fetchGroup);
   };
 
   return (
@@ -77,13 +36,21 @@ const ExploreList = (props: any) => {
             <UserAddedSVG
               className="explore_option_logo"
               id="userAddedSVG"
-              onClick={() => removerUserFromGroup()}
+              onClick={() => {
+                setRequestSent(!requestSent);
+                removerUserFromGroup(data, url);
+                setFetchGroup(!fetchGroup);
+              }}
             />
           ) : (
             <AddUserSVG
               className="explore_option_logo"
               id="addUserSVG"
-              onClick={() => addUserToGroup()}
+              onClick={() => {
+                setRequestSent(!requestSent);
+                addUserToGroup(data, url);
+                setFetchGroup(!fetchGroup);
+              }}
             />
           )
         ) : (

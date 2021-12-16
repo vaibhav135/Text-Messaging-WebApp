@@ -18,6 +18,7 @@ import { Server } from "socket.io";
 import * as dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
 
 // middleware routes
 import routes from "./routes/posts";
@@ -29,10 +30,20 @@ dotenv.config();
 const app = express();
 const httpServer = createServer(app);
 
+//setting up socket.io server
+//cors origin is set to "*" temporarily
+const io = new Server(httpServer, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
+
 const corsConfig = {
   credentials: true,
   origin: true,
 };
+
 app.use(cors(corsConfig));
 app.use(express.json());
 app.use("/post", routes);
@@ -52,12 +63,55 @@ const db_url = `mongodb+srv://${user}:${encodeURIComponent(
 //console.log(db_url);
 //console.log(typeof db_url);
 
-app.get("/", (req, res) => {
-  res.send("hello world");
+type messageDataType = {
+  message: string;
+  group_name: string;
+  group_id: string;
+  metadata: {
+    time: string;
+    sender: string;
+    sender_id: string;
+  };
+};
+
+io.use((socket, next) => {
+  const JWT_TOKEN = process.env.JWT_TOKEN ?? "";
+  // Remove Bearer from string
+  const token = socket.handshake.auth.token;
+  //console.log(token);
+  //let errorData: errInterface = {};
+
+  if (token) {
+    jwt.verify(token, JWT_TOKEN, (err: any, decoded: any) => {
+      if (err) {
+        const message = "not authorized";
+        const data = { content: "Please retry later" }; // additional details
+        next({ name: "error", message: message, data: data });
+      }
+      //req.decoded = decoded;
+      return next();
+    });
+  } else {
+    const message = "token not found";
+    const data = { content: "Please retry later" }; // additional details
+    next({ name: "error", message: message, data: data });
+  }
 });
 
-//const io = new Server(httpServer, { [> options <] });
-//io.on("connection", (socket) => {  // ...});
+io.on("connection", (socket) => {
+  console.log("socket io is open");
+
+  socket.on("join_group", (data) => {
+    socket.join(data.group_id);
+    console.log(`User with ID: ${socket.id} joined room: ${data}`);
+  });
+
+  //socket.on will listen to the messages coming from the client
+  socket.on("send_message", (data: messageDataType) => {
+    console.log(data);
+    socket.to(data.group_id).emit("received_message", data);
+  });
+});
 
 /**
  * Connecting to the mongoDB atlas database

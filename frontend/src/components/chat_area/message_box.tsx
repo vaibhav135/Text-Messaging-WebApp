@@ -6,7 +6,13 @@ const MessageBox = (props: any) => {
   const message = props.value.message;
 
   return (
-    <div className="message_box">
+    <div
+      className={
+        props.userIdSelf === metaData.sender_id
+          ? "message_box_self"
+          : "message_box_other"
+      }
+    >
       <ul className="message_metadata_ul textFont2">
         {" "}
         {metaDataArray.map((value: string, metadata_index: number) => (

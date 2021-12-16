@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
+import { io } from "socket.io-client";
 import axios from "axios";
 
 import Explore from "../explore/explore";
@@ -21,9 +22,23 @@ const MidSection = (props: any) => {
   // If there exist some group then initially the slected group will be
   // group[0] later it will be the group that the user clicked
   // upon
-  const [groupSelected, setGroupSelected] = useState<string>("");
-  const group_selected_value = { groupSelected, setGroupSelected };
   const url: string = process.env.REACT_APP_BACKEND_URL || "";
+  const [groupSelected, setGroupSelected] = useState<string>("");
+
+  // connecting to socket with auth token
+  const socket = io(url, {
+    auth: {
+      token: "abc",
+    },
+  });
+
+  socket.on("connect_error", (err) => {
+    console.log(err instanceof Error); // true
+    console.log(err.message); // not authorized
+    //console.log(err.data); // { content: "Please retry later" }
+  });
+
+  const group_selected_value = { groupSelected, setGroupSelected };
 
   return (
     <GroupContext.Provider value={group_selected_value}>
@@ -48,14 +63,22 @@ const MidSection = (props: any) => {
                   username={props.username}
                   groupsList={props.joinedGroupsList}
                   setMembersRefresh={() => setMembersRefresh(!membersRefresh)}
+                  socket={socket}
+                  url={url}
                 />
-                <ChatArea userId={props.userId} username={props.username} />
+                <ChatArea
+                  socket={socket}
+                  userId={props.userId}
+                  username={props.username}
+                  groupsList={props.joinedGroupsList}
+                />
                 <Members
                   groupsList={props.joinedGroupsList}
                   userId={props.userId}
                   username={props.username}
                   membersRefresh={membersRefresh}
                   setMembersRefresh={() => setMembersRefresh(!membersRefresh)}
+                  url={url}
                 />
               </>
             ) : (

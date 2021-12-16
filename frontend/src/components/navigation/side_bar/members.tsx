@@ -61,49 +61,49 @@ const Members = (props: any) => {
         <>
           <h2 id="members_subheading">admins</h2>
           <ul id="members_ul">
-            {adminsData[0].map((value: any, index: number) => (
+            {adminsData.map((value: any, index: number) => (
               <li id="member_li" key={index}>
                 {" "}
                 <img
                   id="members_image"
                   alt="admin_image"
                   src={`data:image/svg+xml;utf8,${encodeURIComponent(
-                    value.image
+                    value[0].image
                   )}`}
                 />
-                {value.profile_name}{" "}
+                {value[0].profile_name}{" "}
               </li>
             ))}
           </ul>
           <h2 id="members_subheading">moderators</h2>
           <ul id="members_ul">
-            {moderatorsData[0].map((value: any, index: number) => (
+            {moderatorsData.map((value: any, index: number) => (
               <li id="member_li" key={index}>
                 {" "}
                 <img
                   id="members_image"
                   alt="admin_image"
                   src={`data:image/svg+xml;utf8,${encodeURIComponent(
-                    value.image
+                    value[0].image
                   )}`}
                 />
-                {value.profile_name}{" "}
+                {value[0].profile_name}{" "}
               </li>
             ))}
           </ul>
           <h2 id="members_subheading">members</h2>
           <ul id="members_ul">
-            {membersData[0].map((value: any, index: number) => (
+            {membersData.map((value: any, index: number) => (
               <li id="member_li" key={index}>
                 {" "}
                 <img
                   id="members_image"
                   alt="admin_image"
                   src={`data:image/svg+xml;utf8,${encodeURIComponent(
-                    value.image
+                    value[0].image
                   )}`}
                 />
-                {value.profile_name}{" "}
+                {value[0].profile_name}{" "}
               </li>
             ))}
           </ul>
